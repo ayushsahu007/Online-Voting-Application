@@ -19,6 +19,7 @@ public class VoterService {
     private VoterRepository voterRepository;
     private CandidateRepository candidateRepository;
 
+    @Autowired
     public VoterService(VoterRepository voterRepository, CandidateRepository candidateRepository) {
         this.voterRepository = voterRepository;
         this.candidateRepository = candidateRepository;
@@ -38,17 +39,21 @@ public class VoterService {
     public Voter getVoterById(Long id){
         Voter voter = voterRepository.findById(id).orElse(null);
         if (voter == null){
-            throw new ResourceNotFoundException("Voter with id"+voter.getId()+" not found");
+            throw new ResourceNotFoundException("Voter with id"+id+" not found");
         }
         return voter;
     }
     public Voter updateVoter(Long id,Voter updatedVoter){
         Voter voter = voterRepository.findById(id).orElse(null);
         if (voter==null){
-            throw new ResourceNotFoundException("Voter with id"+id+" not found");
+            throw new ResourceNotFoundException("Voter with id "+ id+" not found");
         }
-        voter.setName(updatedVoter.getName());
-        voter.setEmail(updatedVoter.getEmail());
+       if (updatedVoter.getName()!=null){
+           voter.setName(updatedVoter.getName());
+       }
+       if (updatedVoter.getEmail()!=null){
+           voter.setEmail(updatedVoter.getEmail());
+       }
         return voterRepository.save(voter);
     }
 
