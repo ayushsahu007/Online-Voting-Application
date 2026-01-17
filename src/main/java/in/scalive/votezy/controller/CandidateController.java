@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/candidate")
+@CrossOrigin
 public class CandidateController {
 
     private CandidateService candidateService;
@@ -24,7 +25,7 @@ public class CandidateController {
     @PostMapping("/add")
     public ResponseEntity<Candidate> addCandidate(@RequestBody @Valid Candidate candidate){
         Candidate savedCandiate = candidateService.addCandidate(candidate);
-        return new ResponseEntity<>(candidate, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedCandiate, HttpStatus.CREATED);
     }
 
     @GetMapping
